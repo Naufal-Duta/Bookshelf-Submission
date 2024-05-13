@@ -105,7 +105,7 @@ document.addEventListener(RENDER_EVENT, function () {
     for (const bookItem of books) {
         const bookElement = makeBook(bookItem);
 
-        if(!bookItem.isCompleted) {
+        if (!bookItem.isCompleted) {
             uncompletedBooksList.append(bookElement);
 
         }
@@ -136,4 +136,30 @@ function findBook(bookID) {
     return null;
 }
 
+function removeBookFromCompleted(bookID) {
+    const bookTarget = findBookIndex(bookID);
 
+    if (bookTarget === -1) return;
+
+    books.splice(bookTarget, 1);
+    document.dispatchEvent(new Event(RENDER_EVENT));
+}
+
+function undoBookFromCompleted(bookID) {
+    const bookTarget = findBook(bookID);
+
+    if (bookTarget == null) return;
+
+    bookTarget.isCompleted = false;
+    document.dispatchEvent(new Event(RENDER_EVENT));
+}
+
+function findBookIndex(bookID) {
+    for (const index in books) {
+        if(books[index].id === bookID) {
+            return index;
+        }
+    }
+
+    return -1;
+}
