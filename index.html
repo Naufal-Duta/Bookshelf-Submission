@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookshelf Apps</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <header class="header">
+        <h1>
+            BOOKSHELF APPS
+        </h1>
+    </header>
+
+    <main>
+
+        <!-- Cari Buku -->
+        <Section>
+            <form align="center" action="">
+                <input type="text" placeholder="Masukkan nama buku...">
+            </form>
+        </Section>
+
+        <!-- Belum selesai dibaca -->
+        <section style="border: 1px solid black;">
+            <div class="container">
+                <h2>Belum selesai dibaca</h2>
+                <div class="list-item" id="books">
+
+                </div>
+            </div>
+            <div>
+
+            </div>
+        </section>
+
+        <!-- Sudah selesai dibaca -->
+        <section style="border: 1px solid black;">
+            <div class="container">
+                <h2>Sudah selesai dibaca</h2>
+                <div class="list-item" id="completed-books">
+
+                </div>
+            </div>
+            <div>
+
+            </div>
+        </section>
+
+        <!-- Input Buku -->
+        <section style="flex-direction: column; display: flex; border: 1px solid black;">
+            <h2>Masukkan Buku baru</h2>
+            <form action="" id="form">
+                <div>
+                    <label for="">
+                        Judul
+                    </label>
+                    <input type="text" name="" id="title" style="display: block;">
+                </div>
+
+                <div>
+                    <label for="">
+                        Penulis
+                    </label>
+                    <input type="text" name="" id="writer" style="display: block;">
+                </div>
+
+                <div>
+                    <label for="">
+                        Tahun
+                    </label>
+                    <input type="text" name="" id="year" style="display: block;">
+                </div>
+                <button type="submit" name="submit">
+                    Masukkan buku ke rak
+                </button>
+
+            </form>
+        </section>
+
+
+    </main>
+
+    <script src="js/script.js" type="text/javascript"></script>
+</body>
+
+</html>
