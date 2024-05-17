@@ -6,81 +6,94 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bookshelf Apps</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
     <header class="header">
         <h1>
-            BOOKSHELF APPS
+            Bookshelf Apps
         </h1>
     </header>
 
     <main>
 
         <!-- Cari Buku -->
-        <Section>
+        <Section class="searchBox">
             <form align="center" action="">
                 <input type="text" placeholder="Masukkan nama buku...">
             </form>
         </Section>
 
         <!-- Belum selesai dibaca -->
-        <section style="border: 1px solid black;">
+        <section class="sectionContainer">
             <div class="container">
                 <h2>Belum selesai dibaca</h2>
-                <div class="list-item" id="books">
+                <table class="table" id="books">
 
+                </table>
+                <div class="buttonAddBook">
+                    <button id="myBtn">
+                        Tambah Buku
+                    </button>
+
+                    <div id="myModal" class="modal">
+
+                        <div class="modal-content">
+                            <!-- Input Buku -->
+                            <section style="flex-direction: column; display: flex; border: 1px solid black;"
+                                class="sectionContainer">
+                                <div class="modal-container">
+                                    <div class="divCloseButton">
+                                        <a class="close">&times;</a>
+                                    </div>
+                                    <div class="form-content" align = "center">
+                                        <h2>Masukkan Buku baru</h2>
+                                        <form action="" id="form" name="form">
+                                            
+                                                <label for="">
+                                                    Judul
+                                                </label>
+                                                <input type="text" name="" id="title" style="display: block;">
+    
+                                                <label for="">
+                                                    Penulis
+                                                </label>
+                                                <input type="text" name="" id="writer" style="display: block;">
+    
+                                                <label for="">
+                                                    Tahun
+                                                </label>
+                                                <input type="text" name="" id="year" style="display: block;">
+                                            <button type="submit" name="submit">
+                                                Masukkan buku ke rak
+                                            </button>
+    
+                                        </form>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                    </div>
                 </div>
-            </div>
-            <div>
 
             </div>
+
         </section>
 
         <!-- Sudah selesai dibaca -->
-        <section style="border: 1px solid black;">
+        <section class="sectionContainer">
             <div class="container">
                 <h2>Sudah selesai dibaca</h2>
-                <div class="list-item" id="completed-books">
+                <table class="table" id="completed-books">
 
-                </div>
-            </div>
-            <div>
-
+                </table>
             </div>
         </section>
-
-        <!-- Input Buku -->
-        <section style="flex-direction: column; display: flex; border: 1px solid black;">
-            <h2>Masukkan Buku baru</h2>
-            <form action="" id="form">
-                <div>
-                    <label for="">
-                        Judul
-                    </label>
-                    <input type="text" name="" id="title" style="display: block;">
-                </div>
-
-                <div>
-                    <label for="">
-                        Penulis
-                    </label>
-                    <input type="text" name="" id="writer" style="display: block;">
-                </div>
-
-                <div>
-                    <label for="">
-                        Tahun
-                    </label>
-                    <input type="text" name="" id="year" style="display: block;">
-                </div>
-                <button type="submit" name="submit">
-                    Masukkan buku ke rak
-                </button>
-
-            </form>
-        </section>
-
 
     </main>
 

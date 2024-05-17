@@ -1,18 +1,169 @@
 * {
     box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: "Montserrat";
 }
 
 .header {
     text-align: center;
+    background-color: #7AB2B2;
+    padding: 12px;
 }
 
-.check-button {
-    width: 40px;
-    height: 40px;
+.header>h1 {
+    color: white;
+}
 
-    background: url('../assets/check-outline.svg');
-    background-size: contain;
-    margin-left: auto;
+.searchBox {
+    padding: 10px;
+}
+
+.searchBox>form {
+    padding: 10px;
+}
+
+.searchBox>form>input {
+    padding: 10px;
+    width: 500px;
+    border-radius: 5px;
+    border-width: 1px;
+
+}
+
+.sectionContainer {
+    padding: 20px;
+}
+
+.container>h2 {
+    color: #4D869C;
+    padding-bottom: 10px;
+}
+
+.inner {
+    display: flex;
+    justify-content: space-between;
+}
+
+.divButton {
+    display: flex;
+}
+
+.containerList {
+    display: flex;
+    padding: 10px;
+    justify-content: space-between;
+    border: 1px solid black;
+    margin-bottom: 30px;
+    margin-top: 15px;
+    border-radius: 12px;
+}
+
+.tableHeader>th {
+    padding: 10px;
+    border: 1px solid black;
+}
+
+.table {
+    width: 100%;
+}
+
+.tableRow {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    padding: 10px;
+    border: 1px solid black;
+    margin: 10px;
+    border-radius: 10px;
+}
+
+.tableData {
+    padding: 10px;
+    border: 1px solid black;
+}
+
+.buttonAddBook {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.col1 {
+    width: 5%;
+}
+
+.col2 {
+    width: 20%;
+}
+
+.col3 {
+    width: 20%;
+}
+
+.col4 {
+    width: 20%;
+}
+
+.col5 {
+    width: 20%;
+}
+
+.modal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    display: flex;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
     cursor: pointer;
-    border: none;
+}
+
+.divCloseButton {
+    justify-content: end;
+}
+
+.modal-container {
+    justify-content: space-between;
+}
+
+.form-content * {
+    margin: 10px;
 }
