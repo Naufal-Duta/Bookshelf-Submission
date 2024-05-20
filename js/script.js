@@ -1,6 +1,5 @@
 const books = [];
 const RENDER_EVENT = 'render-book';
-
 const SAVED_EVENT = 'saved-book';
 const STORAGE_KEY = 'BOOK_APPS';
 
@@ -10,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
         event.preventDefault();
         modal.style.display = "none";
         addBook();
+        displayAlert();
     })
 
     if (isStorageExist()) {
@@ -17,16 +17,139 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
+function displayAlert() {
+    const successMessage = document.getElementById('successMessage');
+    successMessage.style.display = 'block';
+
+    setTimeout(() => {
+        successMessage.style.display = 'none';
+    }, 3000);
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    const submitForm = document.getElementById('search');
+    submitForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        searchBook();
+    })
+
+});
+
+function searchBook() {
+    const inputRaw = document.getElementById('searchTitle');
+    const input = inputRaw.value.trim().toLowerCase();
+    const uncompletedBooksList = document.getElementById('books');
+    uncompletedBooksList.innerHTML = '';
+
+    const completedBooksList = document.getElementById('completed-books');
+    completedBooksList.innerHTML = '';
+
+    const foundBook = books.filter(searchBook => searchBook.title.toLowerCase().includes(input));
+
+    let numberCompleted = 0;
+    let numberUncompleted = 0;
+    if (!input) {
+        document.dispatchEvent(new Event(RENDER_EVENT));
+    }
+
+    else if (foundBook.length == 0) {
+        uncompletedBooksList.innerHTML = 'Tidak Ada buku...';
+        completedBooksList.innerHTML = 'Tidak Ada buku...';
+    }
+
+    else if (foundBook.length > 0) {
+        foundBook.forEach(book => {
+            if (!book.isCompleted) {
+                numberUncompleted += 1;
+                if (numberUncompleted == 1) {
+                    const tableRow = document.createElement('tr');
+                    tableRow.classList.add('tableRow');
+
+                    const headerNo = document.createElement('th');
+                    headerNo.innerText = 'No.';
+                    headerNo.classList.add('col1');
+
+                    const headerTitle = document.createElement('th');
+                    headerTitle.innerText = 'Title';
+                    headerTitle.classList.add('col2');
+
+                    const headerWriter = document.createElement('th');
+                    headerWriter.innerText = 'Writer';
+                    headerWriter.classList.add('col3');
+
+                    const headerYear = document.createElement('th');
+                    headerYear.innerText = 'Year';
+                    headerYear.classList.add('col4');
+
+                    const action = document.createElement('th');
+                    action.innerText = '';
+                    action.classList.add('col5');
+
+                    tableRow.append(headerNo, headerTitle, headerWriter, headerYear, action);
+                    uncompletedBooksList.append(tableRow);
+                }
+
+                const bookElement = makeBook(book, numberUncompleted);
+                uncompletedBooksList.append(bookElement);
+            }
+
+
+            else if (book.isCompleted) {
+                numberCompleted += 1;
+                if (numberCompleted == 1) {
+                    const tableRow = document.createElement('tr');
+                    tableRow.classList.add('tableRow');
+
+                    const headerNo = document.createElement('th');
+                    headerNo.innerText = 'No.';
+                    headerNo.classList.add('col1');
+
+                    const headerTitle = document.createElement('th');
+                    headerTitle.innerText = 'Title';
+                    headerTitle.classList.add('col2');
+
+                    const headerWriter = document.createElement('th');
+                    headerWriter.innerText = 'Writer';
+                    headerWriter.classList.add('col3');
+
+                    const headerYear = document.createElement('th');
+                    headerYear.innerText = 'Year';
+                    headerYear.classList.add('col4');
+
+                    const action = document.createElement('th');
+                    action.innerText = '';
+                    action.classList.add('col5');
+
+                    tableRow.append(headerNo, headerTitle, headerWriter, headerYear, action);
+                    completedBooksList.append(tableRow);
+                }
+
+                const bookElement = makeBook(book, numberCompleted);
+                completedBooksList.append(bookElement);
+            }
+        })
+
+        if (numberUncompleted == 0) {
+            uncompletedBooksList.innerHTML = 'Tidak Ada buku...';
+        }
+
+        else if (numberCompleted == 0) {
+            completedBooksList.innerHTML = 'Tidak Ada buku...';
+        }
+    }
+}
+
 function addBook() {
     const titleBook = document.getElementById('title').value;
     const writerBook = document.getElementById('writer').value;
     const yearBook = document.getElementById('year').value;
+    const statusBook = document.getElementById('status');
+    const status = statusBook.checked;
     const getForm = document.getElementById('form');
 
     const generatedID = generateId();
-    const bookObject = generateBookObject(generatedID, titleBook, writerBook, yearBook, false);
+    const bookObject = generateBookObject(generatedID, titleBook, writerBook, yearBook, status);
     books.push(bookObject);
-
     document.dispatchEvent(new Event(RENDER_EVENT));
     getForm.reset();
     saveData();
@@ -46,13 +169,7 @@ function generateBookObject(id, title, writer, year, isCompleted) {
     }
 }
 
-document.addEventListener(RENDER_EVENT, function () {
-    console.log(books);
-})
-
 function makeBook(bookObject, number) {
-
-
     const bookNumber = document.createElement('td');
     bookNumber.innerText = number;
     bookNumber.classList.add('col1');
@@ -71,6 +188,7 @@ function makeBook(bookObject, number) {
     textYear.classList.add('col4');
 
     const trTable = document.createElement('tr');
+    trTable.setAttribute('id', bookObject.id);
     trTable.classList.add('tableRow');
     const container = document.createElement('div');
     container.classList.add('containerList');
@@ -80,6 +198,7 @@ function makeBook(bookObject, number) {
         const tdButton = document.createElement('td');
         const undoButton = document.createElement('button');
         undoButton.innerHTML = "Tandai belum dibaca";
+        undoButton.classList.add('button');
 
         undoButton.addEventListener('click', function () {
             undoBookFromCompleted(bookObject.id)
@@ -87,6 +206,7 @@ function makeBook(bookObject, number) {
 
         const trashButton = document.createElement('button');
         trashButton.innerHTML = "Hapus";
+        trashButton.classList.add('button');
 
         trashButton.addEventListener('click', function () {
             removeBookFromCompleted(bookObject.id)
@@ -104,12 +224,21 @@ function makeBook(bookObject, number) {
         const tdButton = document.createElement('td');
         const checkButton = document.createElement('button');
         checkButton.innerHTML = "Tandai sudah dibaca";
+        checkButton.classList.add('button');
+
+        const trashButton = document.createElement('button');
+        trashButton.innerHTML = "Hapus";
+        trashButton.classList.add('button');
+
+        trashButton.addEventListener('click', function () {
+            removeBookFromCompleted(bookObject.id)
+        });
 
         checkButton.addEventListener('click', function () {
             checkButtonFromCompleted(bookObject.id);
         });
 
-        tdButton.append(checkButton);
+        tdButton.append(checkButton, trashButton);
         tdButton.classList.add('col5');
         trTable.append(tdButton);
         container.append(trTable);
@@ -117,31 +246,6 @@ function makeBook(bookObject, number) {
     }
 
     return trTable;
-
-}
-
-function addTableHeader(tableId) {
-
-    const getTableId = document.getElementById(tableId);
-    const tableRow = document.createElement('tr');
-
-    const headerNo = document.createElement('th');
-    headerNo.innerText = 'No.';
-
-    const headerTitle = document.createElement('th');
-    headerTitle.innerText = 'Title';
-
-    const headerWriter = document.createElement('th');
-    headerWriter.innerText = 'Writer';
-
-    const headerYear = document.createElement('th');
-    headerYear.innerText = 'Year';
-
-    tableRow.append(headerNo, headerTitle, headerWriter, headerYear);
-    getTableId.append(tableRow);
-
-    return tableRow;
-
 }
 
 document.addEventListener(RENDER_EVENT, function () {
@@ -227,6 +331,7 @@ document.addEventListener(RENDER_EVENT, function () {
             number += 1;
             const bookElement = makeBook(bookItem, number);
             uncompletedBooksList.append(bookElement);
+            uncompletedBooks.push(bookElement);
         }
     }
 
@@ -312,7 +417,8 @@ function isStorageExist() {
 }
 
 document.addEventListener(SAVED_EVENT, function () {
-    console.log(localStorage.getItem(STORAGE_KEY));
+    const bookData = localStorage.getItem(STORAGE_KEY);
+    console.log(books);
 })
 
 function loadDataFromStorage() {
@@ -362,19 +468,18 @@ var btn = document.getElementById("myBtn");
 var span = document.getElementsByClassName("close")[0];
 
 // When the user clicks on the button, open the modal
-btn.onclick = function() {
-  modal.style.display = "block";
+btn.onclick = function () {
+    modal.style.display = "block";
 }
 
 // When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  modal.style.display = "none";
+span.onclick = function () {
+    modal.style.display = "none";
 }
 
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
+window.onclick = function (event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
 }
 

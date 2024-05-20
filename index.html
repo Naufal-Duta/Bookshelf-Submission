@@ -20,81 +20,82 @@
     </header>
 
     <main>
-
         <!-- Cari Buku -->
         <Section class="searchBox">
-            <form align="center" action="">
-                <input type="text" placeholder="Masukkan nama buku...">
+            <form action="" align="center" id="search">
+                <input type="text" placeholder="Masukkan nama buku..." id="searchTitle">
+                <button id="searchButton" class="button">Cari Buku</button>
             </form>
+            <div id="bookFound" class="bookFound"></div>
         </Section>
+
+        <div id="successMessage" class="alert"><span class="closebtn"
+                onclick="this.parentElement.style.display='none';">&times;</span>
+            Buku Berhasil Ditambahkan
+        </div>
 
         <!-- Belum selesai dibaca -->
         <section class="sectionContainer">
             <div class="container">
                 <h2>Belum selesai dibaca</h2>
-                <table class="table" id="books">
-
-                </table>
+                <table class="table" id="books"></table>
                 <div class="buttonAddBook">
-                    <button id="myBtn">
+                    <button id="myBtn" class="button">
                         Tambah Buku
                     </button>
-
                     <div id="myModal" class="modal">
-
                         <div class="modal-content">
+
                             <!-- Input Buku -->
-                            <section style="flex-direction: column; display: flex; border: 1px solid black;"
-                                class="sectionContainer">
+                            <section style="flex-direction: column; display: flex;" class="sectionContainer">
                                 <div class="modal-container">
                                     <div class="divCloseButton">
                                         <a class="close">&times;</a>
                                     </div>
-                                    <div class="form-content" align = "center">
+                                    <div class="form-content" align="center">
                                         <h2>Masukkan Buku baru</h2>
                                         <form action="" id="form" name="form">
+                                            <label for="">
+                                                Judul
+                                            </label>
+                                            <input type="text" name="judul" id="title" style="display: block;">
+
+                                            <label for="">
+                                                Penulis
+                                            </label>
+                                            <input type="text" name="penulis" id="writer" style="display: block;">
+
+                                            <label for="">
+                                                Tahun
+                                            </label>
+                                            <input type="number" name="tahun" id="year" style="display: block;">
+
+                                            <input type="checkbox" name="status" id="status">
+                                            <label for="status">
+                                                Selesai Dibaca
+                                            </label>
                                             
-                                                <label for="">
-                                                    Judul
-                                                </label>
-                                                <input type="text" name="" id="title" style="display: block;">
-    
-                                                <label for="">
-                                                    Penulis
-                                                </label>
-                                                <input type="text" name="" id="writer" style="display: block;">
-    
-                                                <label for="">
-                                                    Tahun
-                                                </label>
-                                                <input type="text" name="" id="year" style="display: block;">
-                                            <button type="submit" name="submit">
+                                            <button type="submit" name="submit" class="button" style="display: block;">
                                                 Masukkan buku ke rak
                                             </button>
-    
                                         </form>
                                     </div>
                                 </div>
                             </section>
-                        </div>
 
+                        </div>
                     </div>
                 </div>
-
             </div>
-
         </section>
 
         <!-- Sudah selesai dibaca -->
         <section class="sectionContainer">
             <div class="container">
                 <h2>Sudah selesai dibaca</h2>
-                <table class="table" id="completed-books">
-
-                </table>
+                <table class="table" id="completed-books"></table>
             </div>
         </section>
-
     </main>
 
     <script src="js/script.js" type="text/javascript"></script>
