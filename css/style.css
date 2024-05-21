@@ -4,6 +4,7 @@
     margin: 0;
     font-family: "Montserrat";
 }
+
 h2 {
     color: #4D869C;
 }
@@ -31,7 +32,7 @@ h2 {
 
 }
 
-.sectionContainer {
+.articleContainer {
     padding: 20px;
 }
 
@@ -87,7 +88,7 @@ h2 {
     border: 1px solid black;
 }
 
-.buttonAddBook {
+.addBook {
     align-items: center;
     justify-content: center;
     display: flex;
@@ -109,37 +110,26 @@ h2 {
 
 .modal {
     display: none;
-    /* Hidden by default */
     position: fixed;
-    /* Stay in place */
     z-index: 1;
-    /* Sit on top */
     left: 0;
     top: 0;
     width: 100%;
-    /* Full width */
     height: 100%;
-    /* Full height */
     overflow: auto;
-    /* Enable scroll if needed */
     background-color: rgb(0, 0, 0);
-    /* Fallback color */
     background-color: rgba(0, 0, 0, 0.4);
-    /* Black w/ opacity */
 }
 
-/* Modal Content/Box */
 .modal-content {
     background-color: #fefefe;
     margin: 15% auto;
-    /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
     width: 50%;
-    /* Could be more or less, depending on screen size */
+
 }
 
-/* The Close Button */
 .close {
     color: #aaa;
     font-size: 28px;
@@ -170,7 +160,6 @@ h2 {
     padding: 10px;
 }
 
-/* The alert message box */
 .alert {
     background-color: green;
     display: none;
@@ -185,7 +174,6 @@ h2 {
     z-index: 1000;
 }
 
-/* The close button */
 .closebtn {
     margin-left: 15px;
     color: white;
@@ -197,7 +185,6 @@ h2 {
     transition: 0.3s;
 }
 
-/* When moving the mouse over the close button */
 .closebtn:hover {
     color: black;
 }

@@ -5,11 +5,13 @@ const STORAGE_KEY = 'BOOK_APPS';
 
 document.addEventListener('DOMContentLoaded', function () {
     const submitForm = document.getElementById('form');
+    const modal = document.getElementById('modal');
+    modalConfig();
     submitForm.addEventListener('submit', function (event) {
         event.preventDefault();
-        modal.style.display = "none";
         addBook();
         displayAlert();
+        modal.style.display = 'none';
     })
 
     if (isStorageExist()) {
@@ -32,7 +34,6 @@ document.addEventListener('DOMContentLoaded', function () {
         event.preventDefault();
         searchBook();
     })
-
 });
 
 function searchBook() {
@@ -59,7 +60,7 @@ function searchBook() {
 
     else if (foundBook.length > 0) {
         foundBook.forEach(book => {
-            if (!book.isCompleted) {
+            if (!book.isComplete) {
                 numberUncompleted += 1;
                 if (numberUncompleted == 1) {
                     const tableRow = document.createElement('tr');
@@ -73,9 +74,9 @@ function searchBook() {
                     headerTitle.innerText = 'Title';
                     headerTitle.classList.add('col2');
 
-                    const headerWriter = document.createElement('th');
-                    headerWriter.innerText = 'Writer';
-                    headerWriter.classList.add('col3');
+                    const headerauthor = document.createElement('th');
+                    headerauthor.innerText = 'Author';
+                    headerauthor.classList.add('col3');
 
                     const headerYear = document.createElement('th');
                     headerYear.innerText = 'Year';
@@ -85,7 +86,7 @@ function searchBook() {
                     action.innerText = '';
                     action.classList.add('col5');
 
-                    tableRow.append(headerNo, headerTitle, headerWriter, headerYear, action);
+                    tableRow.append(headerNo, headerTitle, headerauthor, headerYear, action);
                     uncompletedBooksList.append(tableRow);
                 }
 
@@ -94,7 +95,7 @@ function searchBook() {
             }
 
 
-            else if (book.isCompleted) {
+            else if (book.isComplete) {
                 numberCompleted += 1;
                 if (numberCompleted == 1) {
                     const tableRow = document.createElement('tr');
@@ -108,9 +109,9 @@ function searchBook() {
                     headerTitle.innerText = 'Title';
                     headerTitle.classList.add('col2');
 
-                    const headerWriter = document.createElement('th');
-                    headerWriter.innerText = 'Writer';
-                    headerWriter.classList.add('col3');
+                    const headerauthor = document.createElement('th');
+                    headerauthor.innerText = 'Author';
+                    headerauthor.classList.add('col3');
 
                     const headerYear = document.createElement('th');
                     headerYear.innerText = 'Year';
@@ -120,7 +121,7 @@ function searchBook() {
                     action.innerText = '';
                     action.classList.add('col5');
 
-                    tableRow.append(headerNo, headerTitle, headerWriter, headerYear, action);
+                    tableRow.append(headerNo, headerTitle, headerauthor, headerYear, action);
                     completedBooksList.append(tableRow);
                 }
 
@@ -141,14 +142,15 @@ function searchBook() {
 
 function addBook() {
     const titleBook = document.getElementById('title').value;
-    const writerBook = document.getElementById('writer').value;
-    const yearBook = document.getElementById('year').value;
+    const authorBook = document.getElementById('author').value;
+    const year = document.getElementById('year').value;
+    const yearBook = parseInt(year, 10);
     const statusBook = document.getElementById('status');
     const status = statusBook.checked;
     const getForm = document.getElementById('form');
 
     const generatedID = generateId();
-    const bookObject = generateBookObject(generatedID, titleBook, writerBook, yearBook, status);
+    const bookObject = generateBookObject(generatedID, titleBook, authorBook, yearBook, status);
     books.push(bookObject);
     document.dispatchEvent(new Event(RENDER_EVENT));
     getForm.reset();
@@ -159,13 +161,13 @@ function generateId() {
     return +new Date();
 }
 
-function generateBookObject(id, title, writer, year, isCompleted) {
+function generateBookObject(id, title, author, year, isComplete) {
     return {
         id,
         title,
-        writer,
+        author,
         year,
-        isCompleted
+        isComplete
     }
 }
 
@@ -179,9 +181,9 @@ function makeBook(bookObject, number) {
     textTitle.innerText = bookObject.title;
     textTitle.classList.add('col2');
 
-    const textWriter = document.createElement('td');
-    textWriter.innerText = bookObject.writer;
-    textWriter.classList.add('col3');
+    const textauthor = document.createElement('td');
+    textauthor.innerText = bookObject.author;
+    textauthor.classList.add('col3');
 
     const textYear = document.createElement('td');
     textYear.innerText = bookObject.year;
@@ -192,9 +194,9 @@ function makeBook(bookObject, number) {
     trTable.classList.add('tableRow');
     const container = document.createElement('div');
     container.classList.add('containerList');
-    trTable.append(bookNumber, textTitle, textWriter, textYear);
+    trTable.append(bookNumber, textTitle, textauthor, textYear);
 
-    if (bookObject.isCompleted) {
+    if (bookObject.isComplete) {
         const tdButton = document.createElement('td');
         const undoButton = document.createElement('button');
         undoButton.innerHTML = "Tandai belum dibaca";
@@ -270,9 +272,9 @@ document.addEventListener(RENDER_EVENT, function () {
         headerTitle.innerText = 'Title';
         headerTitle.classList.add('col2');
 
-        const headerWriter = document.createElement('th');
-        headerWriter.innerText = 'Writer';
-        headerWriter.classList.add('col3');
+        const headerauthor = document.createElement('th');
+        headerauthor.innerText = 'Author';
+        headerauthor.classList.add('col3');
 
         const headerYear = document.createElement('th');
         headerYear.innerText = 'Year';
@@ -282,7 +284,7 @@ document.addEventListener(RENDER_EVENT, function () {
         action.innerText = '';
         action.classList.add('col5');
 
-        tableRow.append(headerNo, headerTitle, headerWriter, headerYear, action);
+        tableRow.append(headerNo, headerTitle, headerauthor, headerYear, action);
         completedBooksList.append(tableRow);
 
     }
@@ -304,9 +306,9 @@ document.addEventListener(RENDER_EVENT, function () {
         headerTitle.innerText = 'Title';
         headerTitle.classList.add('col2');
 
-        const headerWriter = document.createElement('th');
-        headerWriter.innerText = 'Writer';
-        headerWriter.classList.add('col3');
+        const headerauthor = document.createElement('th');
+        headerauthor.innerText = 'Author';
+        headerauthor.classList.add('col3');
 
         const headerYear = document.createElement('th');
         headerYear.innerText = 'Year';
@@ -316,7 +318,7 @@ document.addEventListener(RENDER_EVENT, function () {
         action.innerText = '';
         action.classList.add('col5');
 
-        tableRow.append(headerNo, headerTitle, headerWriter, headerYear, action);
+        tableRow.append(headerNo, headerTitle, headerauthor, headerYear, action);
         uncompletedBooksList.append(tableRow);
 
     }
@@ -327,7 +329,7 @@ document.addEventListener(RENDER_EVENT, function () {
 
     let number = 0;
     for (const bookItem of books) {
-        if (!bookItem.isCompleted) {
+        if (!bookItem.isComplete) {
             number += 1;
             const bookElement = makeBook(bookItem, number);
             uncompletedBooksList.append(bookElement);
@@ -337,7 +339,7 @@ document.addEventListener(RENDER_EVENT, function () {
 
     number = 0;
     for (const bookItem of books) {
-        if (bookItem.isCompleted) {
+        if (bookItem.isComplete) {
             number += 1;
             const bookElement = makeBook(bookItem, number);
             completedBooksList.append(bookElement);
@@ -354,7 +356,7 @@ function checkButtonFromCompleted(bookID) {
         return;
     }
 
-    bookTarget.isCompleted = true;
+    bookTarget.isComplete = true;
     document.dispatchEvent(new Event(RENDER_EVENT));
     saveData();
 }
@@ -384,7 +386,7 @@ function undoBookFromCompleted(bookID) {
 
     if (bookTarget == null) return;
 
-    bookTarget.isCompleted = false;
+    bookTarget.isComplete = false;
     document.dispatchEvent(new Event(RENDER_EVENT));
     saveData();
 }
@@ -417,7 +419,6 @@ function isStorageExist() {
 }
 
 document.addEventListener(SAVED_EVENT, function () {
-    const bookData = localStorage.getItem(STORAGE_KEY);
     console.log(books);
 })
 
@@ -438,7 +439,7 @@ function findCompletedBooks(books) {
     var completedBooks = [];
 
     for (var i = 0; i < books.length; i++) {
-        if (books[i].isCompleted) {
+        if (books[i].isComplete) {
             completedBooks.push(books[i]);
         }
     }
@@ -450,36 +451,30 @@ function findUncompletedBooks(books) {
     var uncompletedBooks = [];
 
     for (var i = 0; i < books.length; i++) {
-        if (books[i].isCompleted == false) {
+        if (books[i].isComplete == false) {
             uncompletedBooks.push(books[i]);
         }
     }
 
     return uncompletedBooks;
 }
+function modalConfig() {
+    var modal = document.getElementById("modal");
+    var btn = document.getElementById("addButton");
+    var close = document.getElementsByClassName("close")[0];
+    btn.onclick = function () {
+        modal.style.display = "block";
+    }
 
-// Get the modal
-var modal = document.getElementById("myModal");
-
-// Get the button that opens the modal
-var btn = document.getElementById("myBtn");
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks on the button, open the modal
-btn.onclick = function () {
-    modal.style.display = "block";
-}
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function () {
-    modal.style.display = "none";
-}
-
-window.onclick = function (event) {
-    if (event.target == modal) {
+    close.onclick = function () {
         modal.style.display = "none";
     }
+
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
 }
+
 
